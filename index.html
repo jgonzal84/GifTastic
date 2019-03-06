@@ -1,0 +1,122 @@
+
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GifTastif</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.3/js/uikit-icons.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Video Game Gif Search -->
+    <form>
+        <input type="text" placeholder="Select Video Game">
+        <button>Let's Giphy</button>
+    </form>
+
+    <!-- Video Game Gif Button Field -->
+    <div id="gifTopics">
+
+    </div>
+
+    <!-- Video Game Gif Information Field -->
+    <div id="gameTable" class="uk-column-1-2@s uk-column-1-3@m uk-column-1-4@l">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <script>
+        var topics = ["Bioshock", "Bloodborne", "Dark Souls", "Smash Brothers", "Zelda"];
+        // Create Buttons Based on Topics
+        for (var i = 0; i < topics.length; i++) {
+            var button = $('<button>');
+            button.text(topics[i]);
+            $('#gifTopics').append(button);
+            console.log('appending', i)
+        };
+        // Append VideoGame Input As Buttons
+        $('form button').on('click', function () {
+            event.preventDefault();
+            var button = $('<button>');
+            var gameText = $('input').val();
+            button.text(gameText);
+            topics.push(gameText);
+            $('#gifTopics').append(button);
+        });
+        // AJAX Query Based on VideoGame Input Text
+        $(document).on('click', '#gifTopics button', function () {
+            var videoGame = $(this).text();
+            var vurl = "https://api.giphy.com/v1/gifs/search?api_key=PztaCJhsY6krctsS1EmOt6H90Ad2LpXC&q=" + videoGame + "&limit=4&offset=0&rating=R&lang=en";
+            $.ajax({
+                url: vurl,
+                method: "GET"
+            }).then(function (response) {
+                for (var i = 0; i < response.data.length; i++) {
+            
+                    $('#gameTable').append(
+                        `<div class="uk-column-1-2@s uk-column-1-3@m uk-column-1-4@l">
+                            <p>${response.data[i].rating}<p>
+                            <p><img src="${response.data[i].images.fixed_height.url}" height="800" width="800"><p>
+                        </div>`
+                    );
+                }
+            })
+        })
+        $.ajax({
+            url: "https://api.giphy.com/v1/gifs/search?api_key=PztaCJhsY6krctsS1EmOt6H90Ad2LpXC&q=soccer&limit=1&offset=0&rating=R&lang=en",
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+        })
+    </script>
+
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fail Gifs</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="styles"></div>
+            <h1>Fail Gif Frenzy</h1>
+
+            <div id="topPageButtons"></div>
+        
+    <form id="entryForm">
+        <label for="entry-input">Enter the Fail Category</label>
+        <input id="failSubmit" type="text" value="submit">
+    </form>
+
+    <div id="giffyWindow" data-state="still"></div>
+
+    </div>
+    <script src='https://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript" src="./gif.js"></script>
+</body>
+</html> -->
