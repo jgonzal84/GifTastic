@@ -1,4 +1,8 @@
-button{
-    color: rgb(6, 146, 99);
-    box-shadow: 2pt;
+
+h1{
+    font-family: 'Times New Roman', Times, serif
+}
+
+#giffyView {
+    grid-auto-columns: minmax(40px, auto);
 }
